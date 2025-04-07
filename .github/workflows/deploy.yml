@@ -1,0 +1,44 @@
+name: Deploy to GCP on PR Merge
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.GCP_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.GCP_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to GCP
+        run: |
+          ssh ${{ secrets.GCP_USERNAME }}@${{ secrets.GCP_HOST }} << 'EOF'
+            set -e
+
+            echo "[+] 서비스 중지 중..."
+            sudo systemctl stop 2ven-backend.service
+
+            echo "[+] 프로젝트 디렉토리 이동..."
+            cd /home/kimdh10806/FinalProject_2VEN_BE
+
+            echo "[+] 코드 Pull..."
+            git pull origin main
+
+            echo "[+] Maven Build 시작..."
+            ./mvnw clean package -DskipTests
+
+            echo "[+] 서비스 재시작..."
+            sudo systemctl start 2ven-backend.service
+
+            echo "[+] 배포 완료!"
+          EOF
