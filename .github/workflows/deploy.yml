@@ -30,6 +30,9 @@ jobs:
 
             echo "[+] 프로젝트 디렉토리 이동..."
             cd /home/kimdh10806/Final_2VEN_BE
+          
+            echo "[+] 프로젝트 디렉토리 안전 디렉토리 설정..."
+            git config --global --add safe.directory /home/kimdh10806/Final_2VEN_BE
 
             echo "[+] 코드 Pull..."
             git pull origin main
