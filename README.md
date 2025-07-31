@@ -193,7 +193,7 @@
 | **Frontend** | React.js, TypeScript, Emotion, HeadlessUI, Zustand, TanStack Query, MSW, ESLint, Prettier |
 | **Backend**  | Java, Spring Boot, Spring Security, Maven, Jenkins, JWT, JUnit5, Mockito, Swagger         |
 | **Database** | MySQL, Spring Data JPA                                                                    |
-| **배포**     | Google Cloud Platform, AWS S3                                                                           |
+| **배포**     | Google Cloud Platform, AWS S3, Github Actions                                                                           |
 
 <br/>
 <br/>
